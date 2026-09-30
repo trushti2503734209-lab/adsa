@@ -1,0 +1,48 @@
+INF = 9999
+
+def dijkstra(graph, source):
+    n = len(graph)
+
+    distance = [INF] * n
+    visited = [False] * n
+
+    distance[source] = 0
+
+    for i in range(n):
+        # Find minimum distance vertex
+        u = -1
+        minimum = INF
+
+        for j in range(n):
+            if not visited[j] and distance[j] < minimum:
+                minimum = distance[j]
+                u = j
+
+        if u == -1:
+            break
+
+        visited[u] = True
+
+        # Update distances
+        for v in range(n):
+            if (not visited[v] and graph[u][v] != 0
+                    and distance[u] + graph[u][v] < distance[v]):
+                
+                distance[v] = distance[u] + graph[u][v]
+
+    return distance
+
+
+# Graph
+graph = [
+    [0, 4, 1, 0],
+    [4, 0, 2, 5],
+    [1, 2, 0, 8],
+    [0, 5, 8, 0]
+]
+
+source = 0
+
+answer = dijkstra(graph, source)
+
+print("Shortest distances:", answer)
